@@ -1,0 +1,46 @@
+version: '3.3'
+
+services:
+  xendpal_api:
+    build: .
+    command: pipenv run python3 main.py --env dev
+    depends_on:
+      - db
+    networks:
+      - xendpal_network
+    volumes:
+      - .:/usr/src/app
+      - uploads-volume:/usr/src/app/Uploads
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8080/" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    env_file:
+      - ./.env
+    ports:
+      - "8080:8080" # Expose the port to access the API
+
+  db:
+    image: postgres:latest
+    env_file:
+      - ./db.env
+    networks:
+      - xendpal_network
+    volumes:
+      - POSTGRES_DB:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U  xender -d xenderdb " ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "5432:5432"
+
+networks:
+  xendpal_network:
+    driver: bridge
+
+volumes:
+  POSTGRES_DB:
+  uploads-volume:
