@@ -7,10 +7,6 @@ from app.core.db import Base
 import uuid
 from app.core.db.mixins import TimestampMixin
 
- 
-def generate_uuid():
-    return str(uuid.uuid4())
-
 
 class User(Base, TimestampMixin):
     __tablename__ = "users"

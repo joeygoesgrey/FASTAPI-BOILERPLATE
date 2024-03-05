@@ -18,7 +18,3 @@ def standalone_session(func):
             reset_session_context(context=context)
 
     return _standalone_session
-
-#This part ensures each task has its own clean workspace
-
-

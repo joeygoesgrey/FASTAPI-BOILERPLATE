@@ -1,7 +1,5 @@
 from functools import wraps
-
 from core.db import session
-
 
 class AsyncTransactional:
     def __call__(self, func):

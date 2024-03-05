@@ -56,7 +56,3 @@ def get_async_session() -> Session:
     return async_session_factory()
         
 Base = declarative_base()
-
- 
-
-  

@@ -46,6 +46,7 @@ async def token(form_data: OAuth2PasswordRequestForm=Depends()):
             detail="Incorrect email or password"
         )
 
+
 @auth_router.post(
     "/refresh-token",
     response_model=RefreshToken,

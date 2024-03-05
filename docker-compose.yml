@@ -24,7 +24,7 @@ services:
   db:
     image: postgres:latest
     env_file:
-      - ./db.env
+      - .env
     networks:
       - xendpal_network
     volumes:
