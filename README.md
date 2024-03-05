@@ -28,7 +28,8 @@ Modern web applications demand modern solutions. FastAPI is a contemporary frame
 
 ### Project Structure & Guide
 
-├── alembic.ini                                # File: Configuration file for Alembic (database migrations)
+
+<!-- ├── alembic.ini                                # File: Configuration file for Alembic (database migrations)
 ├── app/                                       # Directory: Main application directory
 │   ├── api/                                   # Directory: API routes and endpoints
 │   │   ├── auth_routers/                      # Directory: Authentication-related routes
@@ -94,7 +95,7 @@ Modern web applications demand modern solutions. FastAPI is a contemporary frame
 ├── tests/                                     # Directory: Unit and integration tests
 │   └── __init__.py                            # File: Initializes Python package for tests
 ├── TODO-FASTAPI                               # File: File for tracking TODO items for the project
-└── Uploads/                                   # Directory: Directory for storing uploaded files (if any)
+└── Uploads/                                   # Directory: Directory for storing uploaded files (if any) -->
 
 
 ### Installation
