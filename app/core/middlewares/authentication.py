@@ -12,7 +12,7 @@ from app.core.db import get_async_session
 from sqlalchemy import select
 from uuid import UUID
 
-async def get_user_by_id(user_id: str) -> User:
+async def get_user_by_id(user_id: str) -> Optional[User]:
     try:
         valid_uuid = UUID(user_id)
     except ValueError:
@@ -26,37 +26,36 @@ async def get_user_by_id(user_id: str) -> User:
 
 
 class AuthBackend(AuthenticationBackend):
+
     async def authenticate(self, conn: HTTPConnection) -> Tuple[bool, Optional[CurrentUser]]:
         # current_user = None
         current_user = CurrentUser()
         authorization: str = conn.headers.get("Authorization")
         if not authorization:
-            return False, current_user
-
+            return False, current_user.user
         try:
             scheme, credentials = authorization.split(" ")
             if scheme.lower() != "bearer":
-                return False, current_user
+                return False, current_user.user
         except ValueError:
-            return False, current_user
+            return False, current_user.user
 
         if not credentials:
-            return False, current_user
+            return False, current_user.user
 
         try:
             payload = await JwtService().verify_token(credentials)
             user_id = payload.get("user_id")
             if user_id is None:
-                return False, current_user
+                return False, current_user.user
         except Exception as e:
-            return False, current_user
-        
+            return False, current_user.user
         
         current_user.user = await get_user_by_id(user_id)
         if current_user.user is None:
             return False, current_user
-
-        return True, current_user.user
+        else:
+            return True, current_user.user
 
 
 class AuthenticationMiddleware(BaseAuthenticationMiddleware):
